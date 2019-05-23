@@ -4,7 +4,7 @@ Implementations of clients and web services to measure performance of different 
 
 The web service generates as collection of random numbers, i.e., `http://127.0.0.1:1234/random`.  By default, it generates a collection of 10 random numbers between 0 to 1e6, both inclusive.  The number of random numbers provided can be changed via `num` arguments, i.e., `http://127.0.0.1:1234/random?num=5`.
 
-The client is a general-purpose CLI program that accepts a URL and a number `n` and issues `n` concurrent HTTP GET requests to the given URL.  The point of the client is to simulate a thundering herd.
+The client is a CLI program that simulates a thundering herd by issuing `n` concurrent HTTP GET requests to a URL.  Both the URL and n are specified via the command line.
 
 
 ## Client Technologies
