@@ -5,7 +5,6 @@ import json
 import math
 import random
 import sys
-from timeit import default_timer as timer
 
 from twisted.internet import reactor
 from twisted.python import log
@@ -17,7 +16,6 @@ class RandomNumberGenerator(cyclone.web.RequestHandler):
         randoms = map(lambda x: math.floor(random.random() * 1e6),
                       range(0, num))
         self.write(json.dumps(randoms, separators=(',', ':')))
-        stop = timer()
 
 
 if __name__ == "__main__":
