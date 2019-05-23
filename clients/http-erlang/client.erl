@@ -11,11 +11,11 @@ dispatch_request(Url, Parent) ->
   Elapsed_Time = erlang:monotonic_time(millisecond) - Start,
   case Status of
     ok ->
-      io:format("~pms OK~n", [Elapsed_Time]),
-      Parent ! succ;
+      Msg = io_lib:format("~pms OK", [Elapsed_Time]),
+      Parent ! {succ, Msg};
     error ->
-      io:format("~pms REQ_ERR ~p~n", [Elapsed_Time, element(1, Value)]),
-      Parent ! fail
+      Msg = io_lib:format("~pms REQ_ERR ~p", [Elapsed_Time, element(1, Value)]),
+      Parent ! {fail, Msg}
   end.
 
 wait_on_children(0, NumOfSucc, NumOfFail) ->
@@ -23,8 +23,12 @@ wait_on_children(0, NumOfSucc, NumOfFail) ->
   io:format("Failure: ~p~n", [NumOfFail]);
 wait_on_children(Num, NumOfSucc, NumOfFail) ->
   receive
-    succ -> wait_on_children(Num - 1, NumOfSucc + 1, NumOfFail);
-    fail -> wait_on_children(Num - 1, NumOfSucc, NumOfFail + 1)
+    {Verdict, Msg} ->
+      io:format("~s~n", [Msg]),
+      case Verdict of
+        succ -> wait_on_children(Num - 1, NumOfSucc + 1, NumOfFail);
+        fail -> wait_on_children(Num - 1, NumOfSucc, NumOfFail + 1)
+      end
   end.
 
 main(Args) ->
