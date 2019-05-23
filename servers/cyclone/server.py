@@ -18,10 +18,10 @@ class RandomNumberGenerator(cyclone.web.RequestHandler):
         self.write(json.dumps(randoms, separators=(',', ':')))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     application = cyclone.web.Application([
         (r"/random", RandomNumberGenerator)
-    ])
+    ], "0.0.0.0")
 
     log.startLogging(sys.stdout)
     reactor.listenTCP(1234, application)

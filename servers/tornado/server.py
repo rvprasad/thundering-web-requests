@@ -18,13 +18,13 @@ class RandomNumberGenerator(tornado.web.RequestHandler):
                        range(0, num)))
         self.write(json.dumps(randoms, separators=(',', ':')))
         stop = process_time_ns()
-        tornado.log.app_log.info(" {0:0.3f}ms".format((stop - start) / 1e6))
+        tornado.log.app_log.info(' {0:0.3f}ms'.format((stop - start) / 1e6))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     tornado.log.app_log.setLevel(logging.INFO)
     app = tornado.web.Application([
-        (r"/random", RandomNumberGenerator),
+        (r'/random', RandomNumberGenerator),
     ])
-    app.listen(1234)
+    app.listen(1234, '0.0.0.0')
     tornado.ioloop.IOLoop.current().start()
