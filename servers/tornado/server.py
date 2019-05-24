@@ -8,7 +8,6 @@ import json
 import logging
 import math
 import random
-import sys
 from time import process_time_ns
 
 
@@ -16,8 +15,7 @@ class RandomNumberGenerator(tornado.web.RequestHandler):
     def get(self):
         start = process_time_ns()
         num = int(self.get_argument('num')) if self.get_argument('num') else 10
-        randoms = list(map(lambda x: math.floor(random.random() * 1e6),
-                       range(0, num)))
+        randoms = [math.floor(random.random() * 1e6) for _ in range(0, num)]
         self.write(json.dumps(randoms, separators=(',', ':')))
         stop = process_time_ns()
         tornado.log.app_log.info(' {0:0.3f}ms'.format((stop - start) / 1e6))
