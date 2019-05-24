@@ -1,0 +1,6 @@
+_rel
+config
+deps
+ebin
+.erlang.mk
+server.d
