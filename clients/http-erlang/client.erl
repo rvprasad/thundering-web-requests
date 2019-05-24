@@ -6,9 +6,9 @@
 -import(httpc, [request/1]).
 
 dispatch_request(Url, Parent) ->
-  Start = erlang:monotonic_time(millisecond),
+  Start = erlang:monotonic_time(microsecond),
   {Status, Value} = httpc:request(Url),
-  Elapsed_Time = erlang:monotonic_time(millisecond) - Start,
+  Elapsed_Time = (erlang:monotonic_time(microsecond) - Start) / 1000,
   case Status of
     ok ->
       Msg = io_lib:format("~pms OK", [Elapsed_Time]),
