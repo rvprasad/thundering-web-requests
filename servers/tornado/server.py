@@ -1,5 +1,7 @@
 #!/usr/bin/python3 server.py
+
 import tornado.ioloop
+import tornado.process
 import tornado.web
 import tornado.log
 import json
@@ -27,4 +29,5 @@ if __name__ == '__main__':
         (r'/random', RandomNumberGenerator),
     ])
     app.listen(1234, '0.0.0.0')
+    tornado.process.fork_processes(0)
     tornado.ioloop.IOLoop.current().start()
