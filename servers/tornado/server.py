@@ -14,7 +14,7 @@ from time import process_time_ns
 class RandomNumberGenerator(tornado.web.RequestHandler):
     def get(self):
         start = process_time_ns()
-        num = int(self.get_argument('num')) if self.get_argument('num') else 10
+        num = int(self.get_argument('num', '10'))
         randoms = [math.floor(random.random() * 1e6) for _ in range(0, num)]
         self.write(json.dumps(randoms, separators=(',', ':')))
         stop = process_time_ns()
