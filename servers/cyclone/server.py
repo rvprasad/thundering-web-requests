@@ -12,7 +12,7 @@ from twisted.python import log
 
 class RandomNumberGenerator(cyclone.web.RequestHandler):
     def get(self):
-        num = int(self.get_argument('num')) if self.get_argument('num') else 10
+        num = int(self.get_argument('num', '10'))
         randoms = map(lambda x: math.floor(random.random() * 1e6),
                       range(0, num))
         self.write(json.dumps(randoms, separators=(',', ':')))
