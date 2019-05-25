@@ -16,7 +16,7 @@ class RandomNumberGenerator(tornado.web.RequestHandler):
         start = process_time_ns()
         num = int(self.get_argument('num', '10'))
         randoms = [math.floor(random.random() * 1e6) for _ in range(0, num)]
-        self.write(json.dumps(randoms, separators=(',', ':')))
+        self.finish(json.dumps(randoms, separators=(',', ':')))
         stop = process_time_ns()
         tornado.log.app_log.info(' {0:0.3f}ms'.format((stop - start) / 1e6))
 
