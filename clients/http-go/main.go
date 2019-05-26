@@ -2,56 +2,49 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
-	"runtime/pprof"
 	"strconv"
 	"time"
 )
 
-func main() {
-	f, err := os.Create("cpuprofile")
-	if err != nil {
-		log.Fatal(err)
+func makeRequest(url string, results chan string) {
+	start := time.Now()
+	verdict := "OK"
+	if _, err := http.Get(url); err != nil {
+		fmt.Println(err)
+		verdict = "ERR"
 	}
-	pprof.StartCPUProfile(f)
-	defer pprof.StopCPUProfile()
+	elapsedTime := time.Now().Sub(start)
 
-	url := os.Args[1]
+	results <- verdict
+	fmt.Printf("%.3fms %s\n", float32(elapsedTime.Nanoseconds())/1e6,
+		verdict)
+}
+
+func getNum(args []string) int {
 	num := 10
-	if len(os.Args) > 2 {
-		tmp1, err := strconv.Atoi(os.Args[2])
-		if err == nil {
+	if len(args) > 2 {
+		if tmp1, err := strconv.Atoi(args[2]); err == nil {
 			num = tmp1
 		}
 	}
 
+	return num
+}
+
+func main() {
+	url := os.Args[1]
+	num := getNum(os.Args)
+
 	results := make(chan string)
 	for i := 0; i < num; i++ {
-		go func(url string) {
-			start := time.Now()
-			_, err := http.Get(url)
-			elapsedTime := time.Now().Sub(start)
-
-			verdict := "OK"
-			if err != nil {
-				fmt.Println(err)
-				verdict = "ERR"
-			}
-
-			results <- verdict
-			fmt.Printf("%.3fms %s\n", float32(elapsedTime.Nanoseconds())/1e6,
-				verdict)
-
-		}(url)
+		go makeRequest(url, results)
 	}
 
-	numSucc := 0
-	numFail := 0
+	numSucc, numFail := 0, 0
 	for num > 0 {
-		verdict := <-results
-		if verdict == "OK" {
+		if <-results == "OK" {
 			numSucc++
 		} else {
 			numFail++
