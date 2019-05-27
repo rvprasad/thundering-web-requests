@@ -4,17 +4,17 @@ const url = require('url')
 const hostname = '0.0.0.0'
 const port = 1234
 
-function getRandomNumbers (num) {
+function getRandomNumbers(num) {
   const ret = []
   for (let i = 0; i < num; i = i + 1) {
-    ret.push(Math.floor(Math.random() * 1e6))
+    ret.push(Math.floor(Math.random() * 999999).toString().padStart(6, 0))
   }
   return ret
 }
 
 var reqCount = 1
 
-function getReqCount () {
+function getReqCount() {
   let ret = reqCount
   reqCount = reqCount + 1
   return ret

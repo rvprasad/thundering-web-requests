@@ -12,7 +12,8 @@ app = Flask(__name__)
 def entry():
     start = process_time_ns()
     num = int(request.args.get('num', '10'))
-    randoms = [math.floor(random.random() * 1e6) for _ in range(0, num)]
+    randoms = ["%06d" % math.floor(random.random() * 999999) for _ in
+               range(0, num)]
     ret = json.dumps(randoms, separators=(',', ':'))
     stop = process_time_ns()
     print('{0:0.3f}ms'.format((stop - start) / 1e6))

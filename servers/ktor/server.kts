@@ -21,7 +21,8 @@ val server = embeddedServer(Netty, 1234, "0.0.0.0") {
     get("/random") {
       val start = System.nanoTime()
       val num = call.request.queryParameters["num"]?.toInt() ?: 10
-      val randoms =  Random().ints(num.toLong()).toArray()
+      val randoms =  Random().ints(num.toLong(), 0, 1000000)
+        .mapToObj { "%1$06d".format(it) }.toArray()
       val gson = Gson()
       call.respondText(gson.toJson(randoms), ContentType.Text.Plain)
       val duration = System.nanoTime() - start
