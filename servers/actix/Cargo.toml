@@ -1,0 +1,10 @@
+[package]
+name = "server"
+version = "0.1.0"
+authors = ["Venkatesh-Prasad Ranganath <venkateshprasad.ranganath@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+actix-web = "0.7"
+rand = "0.6.5"
+serde_json = "1.0.39"
