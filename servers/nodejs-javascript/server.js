@@ -12,16 +12,10 @@ function getRandomNumbers(num) {
   return ret
 }
 
-var reqCount = 1
-
-function getReqCount() {
-  let ret = reqCount
-  reqCount = reqCount + 1
-  return ret
-}
+var reqCount = 0
 
 const server = http.createServer((req, res) => {
-  const reqId = getReqCount()
+  const reqId = ++reqCount
   console.time(reqId)
 
   const parsedURL = url.parse(req.url, true)
