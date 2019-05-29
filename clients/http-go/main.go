@@ -8,18 +8,22 @@ import (
 	"time"
 )
 
-func makeRequest(url string, results chan string) {
+type Result struct {
+	verdict string
+	time    float32
+}
+
+func makeRequest(url string, results chan Result) {
 	start := time.Now()
-	verdict := "OK"
+	result := Result{verdict: "OK", time: 0}
 	if _, err := http.Get(url); err != nil {
 		fmt.Println(err)
-		verdict = "ERR"
+		result.verdict = "ERR"
 	}
 	elapsedTime := time.Now().Sub(start)
 
-	results <- verdict
-	fmt.Printf("%.3fms %s\n", float32(elapsedTime.Nanoseconds())/1e6,
-		verdict)
+	result.time = float32(elapsedTime.Nanoseconds()) / 1e6
+	results <- result
 }
 
 func getNum(args []string) int {
@@ -37,14 +41,16 @@ func main() {
 	url := os.Args[1]
 	num := getNum(os.Args)
 
-	results := make(chan string)
+	results := make(chan Result)
 	for i := 0; i < num; i++ {
 		go makeRequest(url, results)
 	}
 
 	numSucc, numFail := 0, 0
 	for num > 0 {
-		if <-results == "OK" {
+		result := <-results
+		fmt.Printf("%.3fms %s\n", result.time, result.verdict)
+		if result.verdict == "OK" {
 			numSucc++
 		} else {
 			numFail++
