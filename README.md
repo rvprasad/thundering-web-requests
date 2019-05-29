@@ -24,6 +24,7 @@ The client is a CLI program used to simulate a thundering herd by concurrently (
 7.  [Ratpack](http://ratpack.io) v1.6.1 ([Kotlin](http://kotlinlang.org) v1.3.31)
 8.  [Tornado](http://www.tornadoweb.org) v6.0.2 ([Python](http://python.org) v3.7.3)
 9.  [Vert.x](http://vertx.io) v3.7.0 ([Kotlin](http://kotlinlang.org) v1.3.31)
+10.  [Yaws](http://yaws.hyber.org/) v2.0.6 ([Erlang](http://erlang.org) v22.0.1)
 
 
 ## Attribution
