@@ -8,7 +8,7 @@ get_random() -> rand:uniform(999999).
 random_generator(0, List) -> List;
 random_generator(N, List) -> random_generator(N - 1, List ++ [get_random()]).
 
-to_string(X) -> io_lib:format("~6..0B", [X]).
+to_string(X) -> io_lib:format("\"~6..0B\"", [X]).
 
 init(Request=#{method := <<"GET">>}, State) ->
   Start = erlang:monotonic_time(microsecond),
