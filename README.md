@@ -27,6 +27,16 @@ The client is a CLI program used to simulate a thundering herd by concurrently (
 10.  [Yaws](http://yaws.hyber.org/) v2.0.6 ([Erlang](http://erlang.org) v22.0.1)
 
 
+## Notes
+
+The implementations was created for a very specific purpose.  So, they are intentionally light on use of good software engineering practices.  Specifically, 
+- there are no automated tests.  `curl` and `ab` were used to manually test the servers and the clients were tested against the servers with debug print statements.
+- minimal error checking was employed in conjunction with internal logic.  
+- user-input was not checked for errors.
+
+That said, suggestions to improve other aspects of the implementations are welcome.  Also, implementations covering other HTTP-based microservice-related operations as well as other languages/technologies are welcome.
+
+
 ## Attribution
 
 Copyright (c) 2019, Venkatesh-Prasad Ranganath
