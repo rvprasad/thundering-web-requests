@@ -8,18 +8,19 @@ import json
 import logging
 import math
 import random
-from time import process_time_ns
+from timeit import default_timer as timer
 
 
 class RandomNumberGenerator(tornado.web.RequestHandler):
     def get(self):
-        start = process_time_ns()
+        start = timer()
         num = int(self.get_argument('num', '10'))
-        randoms = ["%06d" %math.floor(random.random() * 999999) for _ in
+        randoms = ["%06d" % math.floor(random.random() * 999999) for _ in
                    range(0, num)]
-        self.finish(json.dumps(randoms, separators=(',', ':')))
-        stop = process_time_ns()
-        tornado.log.app_log.info(' {0:0.3f}ms'.format((stop - start) / 1e6))
+        ret = json.dumps(randoms, separators=(',', ':'))
+        stop = timer()
+        tornado.log.app_log.info(' {0:0.3f}ms'.format((stop - start) * 1e3))
+        self.finish(ret)
 
 
 if __name__ == '__main__':
