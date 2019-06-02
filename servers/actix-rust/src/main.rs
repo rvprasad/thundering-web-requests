@@ -2,12 +2,16 @@ extern crate actix_web;
 extern crate rand;
 extern crate serde_json;
 
-use actix_web::{server, App, HttpRequest};
+use actix_web::{actix, server, App, HttpRequest};
 use std::time::{Instant};
 
 fn main() {
+  let address = "0.0.0.0:1234";
+  let sys = actix::System::new("server");
   server::new(|| App::new().resource("/random", |r| r.f(random_handler)))
-    .bind("0.0.0.0:1234").unwrap().run();
+    .bind(address).unwrap().start();
+  println!("Serving at {}", address);
+  sys.run();
 
   fn random_handler(req: &HttpRequest) -> String {
     let start = Instant::now();

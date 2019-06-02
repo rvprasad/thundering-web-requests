@@ -19,10 +19,13 @@ class RandomNumberGenerator(cyclone.web.RequestHandler):
 
 
 if __name__ == '__main__':
+    host = '0.0.0.0'
+    port = 1234
     application = cyclone.web.Application([
         (r"/random", RandomNumberGenerator)
-    ], "0.0.0.0")
+    ], host)
 
     log.startLogging(sys.stdout)
-    reactor.listenTCP(1234, application)
+    reactor.listenTCP(port, application)
+    print "Serving at %s:%d" % (host, port)
     reactor.run()

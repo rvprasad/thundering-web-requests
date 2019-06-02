@@ -12,10 +12,12 @@ import ratpack.server.ServerConfig
 import java.net.InetAddress
 import java.util.Random
 
+val host = "0.0.0.0"
+val port = 1234
 RatpackServer.start { serverSpec ->
   val configBuilder = ServerConfig.embedded()
     .port(1234)
-    .address(InetAddress.getByAddress(byteArrayOf(0, 0, 0, 0)))
+    .address(InetAddress.getByName(host))
   serverSpec.serverConfig(configBuilder)
     .handlers { chain ->
       chain.get("random") { ctx ->
@@ -29,3 +31,5 @@ RatpackServer.start { serverSpec ->
       }
     }
 }
+
+println("Serving at $host:$port")

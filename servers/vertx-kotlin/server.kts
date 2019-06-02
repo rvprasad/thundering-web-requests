@@ -13,8 +13,10 @@ import io.vertx.ext.web.Router
 import java.net.InetAddress
 import java.util.Random
 
+val host = "0.0.0.0"
+val port = 1234
 val vertx = Vertx.vertx()
-val server = vertx.createHttpServer(HttpServerOptions().setHost("0.0.0.0"))
+val server = vertx.createHttpServer(HttpServerOptions().setHost(host))
 val router = Router.router(vertx)
 
 router.get("/random").handler { ctx ->
@@ -27,4 +29,5 @@ router.get("/random").handler { ctx ->
   println("%1$5.3fms".format(duration / 1e6))
 }
 
-server.requestHandler(router).listen(1234)
+server.requestHandler(router).listen(port)
+println("Serving at $host:$port")

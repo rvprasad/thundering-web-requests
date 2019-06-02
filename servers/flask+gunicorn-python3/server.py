@@ -6,6 +6,7 @@ import math
 import random
 
 app = Flask(__name__)
+print("Serving now")
 
 
 @app.route('/random', methods=['GET'])

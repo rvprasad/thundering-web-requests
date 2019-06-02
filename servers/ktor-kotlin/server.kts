@@ -16,7 +16,9 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import java.util.Random
 
-val server = embeddedServer(Netty, 1234, "0.0.0.0") {
+val host = "0.0.0.0"
+val port = 1234
+embeddedServer(Netty, port, host) {
   routing {
     get("/random") {
       val start = System.nanoTime()
@@ -29,6 +31,6 @@ val server = embeddedServer(Netty, 1234, "0.0.0.0") {
       println("%1$5.3fms".format(duration / 1e6))
     }
   }
-}
+}.start()
 
-server.start(wait = true)
+println("Serving at $host:$port")

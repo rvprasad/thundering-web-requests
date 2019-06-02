@@ -28,6 +28,10 @@ if __name__ == '__main__':
     app = tornado.web.Application([
         (r'/random', RandomNumberGenerator),
     ])
-    app.listen(1234, '0.0.0.0')
+
+    host = '0.0.0.0'
+    port = 1234
+    app.listen(port, host)
+    print("Serving at {}:{}".format(host, port))
     tornado.process.fork_processes(0)
     tornado.ioloop.IOLoop.current().start()
