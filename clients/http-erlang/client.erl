@@ -23,8 +23,8 @@ wait_on_children(0, NumOfSucc, NumOfFail) ->
   io:format("Failure: ~p~n", [NumOfFail]);
 wait_on_children(Num, NumOfSucc, NumOfFail) ->
   receive
-    {'EXIT', _, {ErrorCode, _}} ->
-      io:format("Child crashed ~p~n", [ErrorCode]),
+    {'EXIT', ChildPid, {ErrorCode, _}} ->
+      io:format("Child ~p crashed ~p~n", [ChildPid, ErrorCode]),
       wait_on_children(Num - 1, NumOfSucc, NumOfFail);
     {Verdict, Msg} ->
       io:format("~s~n", [Msg]),
