@@ -1,6 +1,6 @@
 # Thundering Web Requests
 
-Implementations of simple web services and clients using different programming languages and technologies.  The purpose of the implementations is to see how different web serving technologies fare in the face of thundering web requests.
+Implementations of a simple web service and client using different programming languages and technologies.  The purpose of the implementations is to explore the support for web service in different technologies and see how well they handle  thundering web requests.
 
 The web service generates as collection of random numbers as strings -- `http://127.0.0.1:1234/random`.  By default, the service generates a collection of 10 random numbers between 0 to 999,999, both inclusive.  The number of random numbers can be controlled via `num` query parameter, i.e., `http://127.0.0.1:1234/random?num=5`.
 
@@ -34,9 +34,9 @@ The client is a CLI program used to simulate a thundering herd by concurrently (
 ## Notes
 
 The implementations was created for a very specific purpose.  So, they are intentionally light on use of good software engineering practices.  Specifically,
-- there are no automated tests.  `curl` and `ab` were used to manually test the servers and the clients were tested against the servers with debug print statements.
-- minimal error checking is done in conjunction with internal logic.
-- user-input are not checked for errors.
+-   there are no automated tests.  Servers were manually tested using `curl` and `ab`.  Clients were tested against the servers with debug print statements.
+-   minimal error checking is done in conjunction with internal logic.
+-   *n* is assumed to be a valid positive integer and is not checked for validity.
 
 That said, suggestions to improve other aspects of the implementations are welcome.  Also, implementations covering other HTTP-based microservice-related operations as well as other languages/technologies are welcome.
 
