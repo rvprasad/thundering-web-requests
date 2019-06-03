@@ -15,16 +15,13 @@ import java.util.concurrent.atomic.AtomicInteger
 val url = args[0]
 val nums = args[1].toInt()
 val client = WebClient.create(Vertx.vertx())
-val req2startTime = mutableMapOf<Any, Long>()
 val succs = AtomicInteger()
 val fails = AtomicInteger()
 val latch = CountDownLatch(nums)
 for (i in 1..nums) {
   val start = System.nanoTime()
-  val req = client.getAbs(url)
-  req2startTime[req] = start
-  req.send { ar ->
-    val duration: Long = System.nanoTime() - req2startTime.get(req)!!
+  client.getAbs(url).send { ar ->
+    val duration: Long = System.nanoTime() - start
     var verdict = "OK"
     if (ar.succeeded()) {
       succs.incrementAndGet()
