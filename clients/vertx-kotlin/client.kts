@@ -25,12 +25,14 @@ for (i in 1..nums) {
   req2startTime[req] = start
   req.send { ar ->
     val duration: Long = System.nanoTime() - req2startTime.get(req)!!
+    var verdict = "OK"
     if (ar.succeeded()) {
       succs.incrementAndGet()
     } else {
+      verdict = "ERR"
       fails.incrementAndGet()
     }
-    println("%1$5.3fms".format(duration / 1e6))
+    println("%5.3fms %s".format(duration / 1e6, verdict))
     latch.countDown()
   }
 }
