@@ -1,5 +1,5 @@
 ## Execution
 
-Execute the following commands after installing cyclone using pip.
+Execute the following commands after installing Cyclone using pip.
 
 - `python2.7 server.py`
