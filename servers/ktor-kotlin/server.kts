@@ -28,7 +28,7 @@ embeddedServer(Netty, port, host) {
       val gson = Gson()
       call.respondText(gson.toJson(randoms), ContentType.Text.Plain)
       val duration = System.nanoTime() - start
-      println("%1$5.3fms".format(duration / 1e6))
+      println("%5.3fms".format(duration / 1e6))
     }
   }
 }.start()

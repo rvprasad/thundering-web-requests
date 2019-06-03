@@ -26,7 +26,7 @@ router.get("/random").handler { ctx ->
     .mapToObj { "%1$06d".format(it) }.toArray()
   ctx.response().end(Gson().toJson(randoms))
   val duration = System.nanoTime() - start
-  println("%1$5.3fms".format(duration / 1e6))
+  println("%5.3fms".format(duration / 1e6))
 }
 
 server.requestHandler(router).listen(port)
