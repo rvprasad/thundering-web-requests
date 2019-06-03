@@ -1,5 +1,5 @@
 ## Execution
 
-Execute the following commands after installing Cyclone using pip.
+Execute the following commands after installing Cyclone and Twisted into PyPy using pip.
 
-- `python2.7 server.py`
+- `pypy server.py`
