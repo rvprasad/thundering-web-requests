@@ -1,6 +1,6 @@
 ## Execution
 
-Execute the following commands after installing yaws and erlang.
+Execute the following commands after installing Yaws and Erlang.
 
 - `mkdir log`
 - `erlc random_server.erl`
