@@ -5,6 +5,8 @@
 
 -import(httpc, [request/1]).
 
+-mode(compile).
+
 dispatch_request(Url, Parent) ->
   Start = erlang:monotonic_time(microsecond),
   {Status, Value} = httpc:request(Url),
