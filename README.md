@@ -16,7 +16,7 @@ The client is a CLI program used to simulate a thundering herd by concurrently (
 
 ## Server Technologies
 
-1.  [Actix](https://actix.rs/) v0.7 ([Rust](http://rust-lang.org) v1.35.0)
+1.  [Actix-Web](https://actix.rs/) v1.0.0 ([Rust](http://rust-lang.org) v1.35.0)
 2.  [Cowboy](http://ninenines.eu) v2.6.3 ([Erlang](http://erlang.org) v22.0.1)
 3.  [Cyclone](http://cyclone.io) v1.2 + [Twisted](http://twistedmatrix.com/trac/) v19.2.0 ([PyPy](http://pypy.org) v2.7.13)
 4.  [Flask](http://flask.pocoo.org) v1.0.3 + [Gunicorn](http://gunicorn.org/) v19.9.0 ([Python](http://python.org) v3.7.3)
@@ -33,10 +33,10 @@ The client is a CLI program used to simulate a thundering herd by concurrently (
 
 ## Notes
 
-The implementations was created for a very specific purpose.  So, they are intentionally light on use of good software engineering practices.  Specifically,
+The implementations was created for a very specific purpose -- experimentation.  So, they are intentionally light on use of good software engineering practices.  Specifically,
 -   there are no automated tests.  Servers were manually tested using `curl` and `ab`.  Clients were tested against the servers with debug print statements.
 -   minimal error checking is done in conjunction with internal logic.
--   *n* is assumed to be a valid positive integer and is not checked for validity.
+-   *n* provided as part of the URL is assumed to be a valid positive integer and is not checked for validity.
 
 That said, suggestions to improve other aspects of the implementations are welcome.  Also, implementations covering other HTTP-based microservice-related operations as well as other languages/technologies are welcome.
 
