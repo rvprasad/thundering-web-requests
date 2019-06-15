@@ -13,6 +13,7 @@ import (
 func randomHandler(writer http.ResponseWriter, req *http.Request) {
 	start := time.Now()
 	num := 10
+	req.ParseForm()
 	if tmp1, exists := req.Form["num"]; exists {
 		if tmp2, err := strconv.Atoi(tmp1[0]); err == nil {
 			num = tmp2
@@ -20,7 +21,7 @@ func randomHandler(writer http.ResponseWriter, req *http.Request) {
 	}
 	nums := make([]string, num)
 	for i := 0; i < num; i++ {
-		nums[i] = strconv.Itoa(rand.Int() % 1000000)
+		nums[i] = fmt.Sprintf("%06d", rand.Int()%1000000)
 	}
 	fmt.Fprintf(writer, "[%s]", strings.Join(nums, ","))
 	elapsedTime := time.Now().Sub(start)
