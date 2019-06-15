@@ -2,4 +2,4 @@
 
 Execute the following commands after installing Cyclone using pip.
 
-- `python server.py`
+- `python2 server.py`

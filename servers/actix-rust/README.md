@@ -2,4 +2,4 @@
 
 Execute the following commands after installing Rust.
 
-- `cargo run`
+- `cargo run --release`
