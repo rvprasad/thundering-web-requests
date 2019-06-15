@@ -37,15 +37,7 @@ func getNum(args []string) int {
 	return num
 }
 
-func main() {
-	url := os.Args[1]
-	num := getNum(os.Args)
-
-	results := make(chan Result)
-	for i := 0; i < num; i++ {
-		go makeRequest(url, results)
-	}
-
+func waitOnResults(results chan Result, completion chan bool, num int) {
 	numSucc, numFail := 0, 0
 	for num > 0 {
 		result := <-results
@@ -60,4 +52,20 @@ func main() {
 
 	fmt.Printf("Success: %d\n", numSucc)
 	fmt.Printf("Failure: %d\n", numFail)
+	completion <- true
+}
+
+func main() {
+	url := os.Args[1]
+	num := getNum(os.Args)
+
+	results := make(chan Result)
+	completion := make(chan bool)
+	go waitOnResults(results, completion, num)
+
+	for i := 0; i < num; i++ {
+		go makeRequest(url, results)
+	}
+
+	<-completion
 }
