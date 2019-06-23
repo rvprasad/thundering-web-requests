@@ -20,6 +20,6 @@ defmodule HttpoisonElixir.MixProject do
 
   # Run "mix help deps" to learn about dependencies.
   def deps do
-    [{:httpoison, "~> 1.4"}]
+    [{:httpoison, "~> 1.5.1"}]
   end
 end
