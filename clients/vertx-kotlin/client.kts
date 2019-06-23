@@ -1,8 +1,8 @@
 // kscript client.kts 127.0.0.1 1234 /random?num=10 100
 
 @file:CompilerOpts("-jvm-target 1.8")
-@file:DependsOn("io.vertx:vertx-web-client:3.7.0")
-@file:DependsOn("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.31")
+@file:DependsOn("io.vertx:vertx-web-client:3.7.1")
+@file:DependsOn("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.40")
 @file:KotlinOpts("-J-Xmx1024M")
 
 import io.vertx.core.Vertx

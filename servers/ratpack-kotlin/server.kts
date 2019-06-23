@@ -3,7 +3,7 @@
 @file:CompilerOpts("-jvm-target 1.8")
 @file:DependsOn("io.ratpack:ratpack-core:1.6.1")
 @file:DependsOn("com.google.code.gson:gson:2.8.5")
-@file:DependsOn("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.31")
+@file:DependsOn("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.40")
 @file:KotlinOpts("-J-Xmx1024M")
 
 import com.google.gson.Gson
