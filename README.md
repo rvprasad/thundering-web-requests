@@ -2,12 +2,12 @@
 
 Implementations of a simple web service and client using different programming languages and technologies.  The purpose of the implementations is to explore the support for web service in different technologies and see how well they handle  thundering web requests.
 
-The web service generates as collection of random numbers as strings -- `http://127.0.0.1:1234/random`.  By default, the service generates a collection of 10 random numbers between 0 to 999,999, both inclusive.  The number of random numbers can be controlled via `num` query parameter, i.e., `http://127.0.0.1:1234/random?num=5`.
+The web service (`http://127.0.0.1:1234/random`) generates as collection of random numbers as strings.  By default, the service generates a collection of 10 random numbers between 0 to 999,999, both inclusive.  The number of random numbers can be controlled via `num` query parameter, e.g., `http://127.0.0.1:1234/random?num=5`.
 
 The client is a CLI program used to simulate a thundering herd by concurrently (as permitted by the system) issuing *n* HTTP GET requests to a URL.  Both the URL and *n* are specified via the command line.
 
 
-## Client Technologies
+## Web Client Technologies
 
 1.  [HTTPoison]() ([Elixir](http://www.elixir-lang.org/) v1.8.2)
 2.  [Erlang](http://www.erlang.org/) v22.0.1
@@ -15,7 +15,7 @@ The client is a CLI program used to simulate a thundering herd by concurrently (
 4.  [Vert.x](http://vertx.io) v3.7.1 ([Kotlin](http://kotlinlang.org) v1.3.40)
 
 
-## Server Technologies
+## Web Service Technologies
 
 1.  [Actix-Web](https://actix.rs/) v1.0.0 ([Rust](http://rust-lang.org) v1.35.0)
 2.  [Cowboy](http://ninenines.eu) v2.6.3 ([Erlang](http://erlang.org) v22.0.1)
