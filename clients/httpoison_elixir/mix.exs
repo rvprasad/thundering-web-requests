@@ -7,7 +7,7 @@ defmodule HttpoisonElixir.MixProject do
       version: "0.1.0",
       elixir: "~> 1.8",
       escript: [main_module: Client],
-      start_permanent: Mix.env() == :prod,
+      start_permanent: Mix.env() == :dev,
       deps: deps()
     ]
   end
