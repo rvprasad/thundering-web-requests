@@ -1,0 +1,4 @@
+profile: service
+defaultPackage: micronaut.kotlin
+---
+sourceLanguage: kotlin
