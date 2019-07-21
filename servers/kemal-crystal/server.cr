@@ -1,8 +1,7 @@
 require "kemal"
 
 def get_randoms(nums)
-  rand = Random.new
-  (1..nums).map { "%06d" % rand.rand(0...1000000) }
+  (1..nums).map { "\"%06d\"" % rand(0...1000000) }
 end
 
 get "/random" do |env|
