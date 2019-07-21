@@ -21,7 +21,7 @@ func randomHandler(writer http.ResponseWriter, req *http.Request) {
 	}
 	nums := make([]string, num)
 	for i := 0; i < num; i++ {
-		nums[i] = fmt.Sprintf("%06d", rand.Int()%1000000)
+		nums[i] = fmt.Sprintf("\"%06d\"", rand.Int()%1000000)
 	}
 	fmt.Fprintf(writer, "[%s]", strings.Join(nums, ","))
 	elapsedTime := time.Now().Sub(start)
