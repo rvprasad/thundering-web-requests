@@ -24,7 +24,7 @@ The client is a CLI program used to simulate a thundering herd by concurrently (
 5.  [Kemal](http://kemalcr.com) v0.25.2 ([Crystal](http://crystal-lang.org/) v0.28.0)
 6.  [Ktor](http://ktor.io) v1.2.2 ([Kotlin](http://kotlinlang.org) v1.3.41)
 7.  [Go](https://golang.org/) v1.12.6
-8.  [Micronaut](http://micronaut.io) 1.1.3 ([Kotlin](http://kotlinlang.org) v1.3.41)
+8.  [Micronaut](http://micronaut.io) 1.1.4 ([Kotlin](http://kotlinlang.org) v1.3.41)
 9.  [NodeJS](http://nodejs.org) v10.16 (JavaScript)
 10.  [NodeJS](http://nodejs.org) v10.16 + [Express](http://expressjs.com) v4.17.1 (JavaScript)
 11. [Phoenix](https://phoenixframework.orgt) v1.4.0 ([Elixir](http://www.elixir-lang.org/) v1.8.1)

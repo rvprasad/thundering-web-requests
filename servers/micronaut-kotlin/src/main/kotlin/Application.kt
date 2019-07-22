@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import io.micronaut.runtime.Micronaut
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.QueryValue
 import io.micronaut.validation.Validated
 import java.util.Random
 
