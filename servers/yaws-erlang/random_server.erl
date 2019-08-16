@@ -19,5 +19,5 @@ out(Req) ->
   Reply = "[" ++ string:join(lists:map(fun to_string/1, RandomNums), ",")
     ++ "]",
   Elapsed_Time = (erlang:monotonic_time(microsecond) - Start) / 1000,
-	io:fwrite("~pms~n", [Elapsed_Time]),
-	{html, Reply}.
+  io:fwrite("~pms~n", [Elapsed_Time]),
+  {html, Reply}.
