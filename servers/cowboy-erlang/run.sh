@@ -1,1 +1,1 @@
-_rel/server_release/bin/server_release foreground console
+./_rel/server_release/bin/server_release foreground console
