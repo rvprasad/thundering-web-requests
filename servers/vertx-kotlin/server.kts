@@ -28,7 +28,6 @@ router.get("/random").handler { ctx ->
 
 val host = "0.0.0.0"
 val port = 1234
-
 val numProcs = Runtime.getRuntime().availableProcessors()
 for (i in 0..numProcs) {
   val server = vertx.createHttpServer(HttpServerOptions().setHost(host))
