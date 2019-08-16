@@ -1,6 +1,7 @@
 // kscript server.kts
 
 @file:CompilerOpts("-jvm-target 1.8")
+@file:DependsOn("io.vertx:vertx-core:3.7.1")
 @file:DependsOn("io.vertx:vertx-web:3.7.1")
 @file:DependsOn("com.google.code.gson:gson:2.8.5")
 @file:DependsOn("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.40")
@@ -13,10 +14,7 @@ import io.vertx.ext.web.Router
 import java.net.InetAddress
 import java.util.Random
 
-val host = "0.0.0.0"
-val port = 1234
 val vertx = Vertx.vertx()
-val server = vertx.createHttpServer(HttpServerOptions().setHost(host))
 val router = Router.router(vertx)
 
 router.get("/random").handler { ctx ->
@@ -29,5 +27,12 @@ router.get("/random").handler { ctx ->
   println("%5.3fms".format(duration / 1e6))
 }
 
-server.requestHandler(router).listen(port)
+val host = "0.0.0.0"
+val port = 1234
+
+val numProcs = Runtime.getRuntime().availableProcessors()
+for (i in 0..numProcs) {
+  val server = vertx.createHttpServer(HttpServerOptions().setHost(host))
+  server.requestHandler(router).listen(port)
+}
 println("Serving at $host:$port")
