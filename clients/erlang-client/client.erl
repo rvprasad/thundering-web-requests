@@ -9,7 +9,7 @@
 
 dispatch_request(Url, Parent) ->
   Start = erlang:monotonic_time(microsecond),
-  {Status, Value} = httpc:request(get, {Url, []}, [{timeout, 120000}], []),
+  {Status, Value} = httpc:request(Url),
   Elapsed_Time = (erlang:monotonic_time(microsecond) - Start) / 1000,
   case Status of
     ok ->
@@ -22,8 +22,7 @@ dispatch_request(Url, Parent) ->
 
 wait_on_children(0, NumOfSucc, NumOfFail) ->
   io:format("Success: ~p~n", [NumOfSucc]),
-  io:format("Failure: ~p~n", [NumOfFail]),
-  halt();
+  io:format("Failure: ~p~n", [NumOfFail]);
 wait_on_children(Num, NumOfSucc, NumOfFail) ->
   receive
     {'EXIT', ChildPid, {ErrorCode, _}} ->
