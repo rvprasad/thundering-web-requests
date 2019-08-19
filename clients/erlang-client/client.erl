@@ -9,7 +9,7 @@
 
 dispatch_request(Url, Parent) ->
   Start = erlang:monotonic_time(microsecond),
-  {Status, Value} = httpc:request(Url),
+  {Status, Value} = httpc:request(get, {Url, []}, [{timeout, 60000}], []),
   Elapsed_Time = (erlang:monotonic_time(microsecond) - Start) / 1000,
   case Status of
     ok ->
