@@ -1,6 +1,6 @@
 # Thundering Web Requests
 
-Implementations of a simple web service and client using different programming languages and technologies.  The purpose of the implementations is to explore the support for web service in different technologies and see how well they handle  thundering web requests.
+Implementations of a simple web service and client using different programming languages and technologies.  The purpose of the implementations is to explore the support for web service in different technologies and see [how well they handle thundering web requests](https://medium.com/@rvprasad/thundering-web-requests-part-0-a4a594556eb9).
 
 The web service (`http://127.0.0.1:1234/random`) generates as collection of random numbers as strings.  By default, the service generates a collection of 10 random numbers between 0 to 999,999, both inclusive.  The number of random numbers can be controlled via `num` query parameter, e.g., `http://127.0.0.1:1234/random?num=5`.
 
@@ -26,7 +26,7 @@ The client is a CLI program used to simulate a thundering herd by concurrently (
 7.  [Go](https://golang.org/) v1.12.6
 8.  [Micronaut](http://micronaut.io) 1.2.0 ([Kotlin](http://kotlinlang.org) v1.3.41)
 9.  [NodeJS](http://nodejs.org) v10.16 (JavaScript)
-10.  [NodeJS](http://nodejs.org) v10.16 + [Express](http://expressjs.com) v4.17.1 (JavaScript)
+10. [NodeJS](http://nodejs.org) v10.16 + [Express](http://expressjs.com) v4.17.1 (JavaScript)
 11. [Phoenix](https://phoenixframework.orgt) v1.4.0 ([Elixir](http://www.elixir-lang.org/) v1.8.1)
 12. [Ratpack](http://ratpack.io) v1.6.1 ([Kotlin](http://kotlinlang.org) v1.3.41)
 13. [Tornado](http://www.tornadoweb.org) v6.0.2 ([Python](http://python.org) v3.7.3)
