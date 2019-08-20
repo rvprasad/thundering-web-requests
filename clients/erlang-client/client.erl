@@ -11,14 +11,13 @@ dispatch_request(Url, Parent) ->
   Start = erlang:monotonic_time(microsecond),
   {Status, Value} = httpc:request(get, {Url, []}, [{timeout, 60000}], []),
   Elapsed_Time = (erlang:monotonic_time(microsecond) - Start) / 1000,
-  case Status of
+  Msg = case Status of
     ok ->
-      Msg = io_lib:format("~pms OK", [Elapsed_Time]),
-      Parent ! {succ, Msg};
+      io_lib:format("~pms OK", [Elapsed_Time]);
     error ->
-      Msg = io_lib:format("~pms REQ_ERR ~p", [Elapsed_Time, element(1, Value)]),
-      Parent ! {fail, Msg}
-  end.
+      io_lib:format("~pms REQ_ERR ~p", [Elapsed_Time, element(1, Value)])
+  end,
+  Parent ! {Status, Msg}.
 
 wait_on_children(0, NumOfSucc, NumOfFail) ->
   io:format("Success: ~p~n", [NumOfSucc]),
@@ -31,8 +30,8 @@ wait_on_children(Num, NumOfSucc, NumOfFail) ->
     {Verdict, Msg} ->
       io:format("~s~n", [Msg]),
       case Verdict of
-        succ -> wait_on_children(Num - 1, NumOfSucc + 1, NumOfFail);
-        fail -> wait_on_children(Num - 1, NumOfSucc, NumOfFail + 1)
+        ok -> wait_on_children(Num - 1, NumOfSucc + 1, NumOfFail);
+        error -> wait_on_children(Num - 1, NumOfSucc, NumOfFail + 1)
       end
   end.
 
