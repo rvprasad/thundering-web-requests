@@ -18,7 +18,7 @@ val client = WebClient.create(Vertx.vertx())
 val succs = AtomicInteger()
 val fails = AtomicInteger()
 val latch = CountDownLatch(nums)
-for (i in 1..nums) {
+(1..nums).asIterable().toList().parallelStream().forEach { x ->
   val start = System.nanoTime()
   client.getAbs(url).send { ar ->
     val duration: Long = System.nanoTime() - start
