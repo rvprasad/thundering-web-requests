@@ -1,0 +1,44 @@
+- hosts: master_raspi
+  remote_user: life
+  strategy: free
+  tasks:
+    - name: actix-rust
+      shell: |
+        cd thundering-web-requests/servers/actix-rust
+        cargo build -j 2 --release
+    - name: cowboy-erlang
+      shell: |
+        cd thundering-web-requests/servers/cowboy-erlang
+        make
+    - name: go-server
+      shell: |
+        cd thundering-web-requests/servers/go-server
+        go build
+  #  - name: kemal-crystal
+  #    shell: |
+  #      cd thundering-web-requests/servers/kemal-crystal
+  #      shards install
+  #      crystal build --release server.cr
+    - name: micronaut-kotlin
+      shell: |
+        cd thundering-web-requests/servers/micronaut-kotlin
+        ./gradlew assemble
+    - name: nodejs-express-javascript
+      shell: |
+        cd thundering-web-requests/servers/nodejs-express-javascript
+        npm install
+    - name: phoenix_elixir
+      shell: |
+        cd thundering-web-requests/servers/phoenix_elixir
+        mix deps.get
+        mix deps.compile
+    - name: trot_elixir
+      shell: |
+        cd thundering-web-requests/servers/trot_elixir
+        mix deps.get
+        mix deps.compile
+    - name: yaws-erlang
+      shell: |
+        cd thundering-web-requests/servers/yaws-erlang
+        mkdir log
+        erlc random_server.erl

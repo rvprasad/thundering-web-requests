@@ -1,0 +1,8 @@
+- hosts: all_raspi
+  remote_user: life
+  tasks:
+    - name: update-repos
+      shell: |
+        eval "$(ssh-agent -s)"
+        ssh-add .ssh/*rsa
+        git clone git@github.com:rvprasad/thundering-web-requests.git

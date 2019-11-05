@@ -1,0 +1,21 @@
+- hosts: worker_raspis
+  remote_user: life
+  strategy: free
+  tasks:
+  - name: go-client
+    shell: |
+      cd thundering-web-requests/clients/go-client
+      go build
+  - name: httpoison_elixir
+    shell: |
+      cd thundering-web-requests/clients/httpoison_elixir
+      mix deps.get
+      mix deps.compile
+      mix escript.build
+  - name: install_apache2_utils
+    become: yes
+    become_method: sudo
+    apt:
+      name: apache2-utils
+      update_cache: yes
+      state: present

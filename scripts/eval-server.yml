@@ -1,0 +1,82 @@
+- hosts: all
+  gather_facts: false
+  remote_user: life
+  tasks:
+    - name:
+      debug: msg="Configuration {{server}} {{client}} {{nums}} {{conc_req}} {{iter}} {{node_timeout}}"
+      when: "'10' in inventory_hostname"
+
+    - name: clean up files
+      shell: |
+        rm -f thundering-web-requests/data/{{server}}/{{client}}-{{nums}}-{{conc_req}}-{{iter}}*log
+      args:
+        warn: False
+
+    - name: start the server
+      shell: |
+        ulimit -n $(( {{conc_req}} * 5 + 1024 ))
+        mkdir -p thundering-web-requests/data/{{server}}
+        cd thundering-web-requests/servers/{{server}}
+        ./run.sh &> ../../data/{{server}}/{{client}}-{{nums}}-{{conc_req}}-{{iter}}-server.log
+      when: "'10' in inventory_hostname"
+      async: "{{node_timeout}}"
+      poll: 0
+      ignore_errors: True
+
+    - name: wait for the server to start
+      wait_for:
+        port: 1234
+        timeout: 30
+        delay: 2
+      when: "'10' in inventory_hostname"
+
+    - name: warm up the server
+      command: ab -n 200 -s 120 http://192.168.2.10:1234/random
+      when: "'10' in inventory_hostname"
+      delegate_to: localhost
+
+    - name: issue http requests using ab
+      shell: |
+        ulimit -n $(( {{conc_req}} + 1024 ))
+        mkdir -p thundering-web-requests/data/{{server}}
+        cd thundering-web-requests
+        ab -n $(( {{conc_req}} * 5 )) -c {{conc_req}} \
+          -s $(( {{node_timeout}} - 60 )) \
+          http://192.168.2.10:1234/random?num={{nums}} \
+          &> data/{{server}}/{{client}}-{{nums}}-{{conc_req}}-{{iter}}.log
+      when: client == 'ab' and '10' not in inventory_hostname
+
+    - name: issue http requests using custom web-clients
+      shell: |
+        ulimit -n $(( {{conc_req}} + 1024 ))
+        cd thundering-web-requests
+        mkdir -p data/{{server}}
+        i=(go-client httpoison_elixir vertx-kotlin)
+        j=$(( `grep -a '^[0-9]$' /dev/urandom -m1` % 3 ))
+        cd clients/${i[$j]}
+        (time ./run.sh http://192.168.2.10:1234/random?num={{nums}} \
+          {{conc_req}}) \
+          &> ../../data/{{server}}/{{client}}-{{nums}}-{{conc_req}}-{{iter}}-${i[$j]}.log
+      when: client == 'wc' and '10' not in inventory_hostname
+
+    - name: kill the server
+      shell: |
+        for i in `ps ax -o sess,cmd | grep thundering | \
+            grep -v "grep thundering" | sed -e "s/^[ \t]*//" | \
+            cut -f 1 -d ' ' | sort -u` ; do
+          pkill -s $i
+        done
+      register: result
+      when: "'10' in inventory_hostname"
+      until: result.rc == 0
+      retries: 5
+      delay: 2
+      ignore_errors: True
+
+    - name: wait for the server to cool down
+      shell: cat /sys/class/thermal/thermal_zone0/temp
+      register: result
+      when: "'10' in inventory_hostname"
+      until: (result.stdout|int) < 62000
+      retries: 100
+      delay: 5
