@@ -1,4 +1,3 @@
 *.beam
 private*
 temp*
-server
