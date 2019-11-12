@@ -50,8 +50,8 @@ with open('scripts/reqs-payload-config.txt', 'r') as f:
 impl_2_failed_nodes = {}
 impl_2_max_compl_succ_reqs = {}
 with open(f'data/ab-client-perf.txt', 'wt') as f:
-    print("# Num Reqs, Num Nums, Min Time/Req, Mean Time/Req, "
-          "Median Time/Req, Max Time/Req, Min Requests/Sec, "
+    print("# Num Reqs, Num Nums, Min Time/Req (ms), Mean Time/Req (ms), "
+          "Median Time/Req (ms), Max Time/Req (ms), Min Requests/Sec, "
           "Mean Requests/Sec, Median Requests/Sec, Max Requests/Sec, "
           "Num Failed Nodes", file=f)
     for impl in ['actix-rust', 'go-server', 'nodejs-express-javascript',

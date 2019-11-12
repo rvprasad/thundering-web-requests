@@ -1,4 +1,4 @@
-# Num Reqs, Num Nums, Min Time/Req, Mean Time/Req, Median Time/Req, Max Time/Req, Min Requests/Sec, Mean Requests/Sec, Median Requests/Sec, Max Requests/Sec, Num Failed Nodes
+# Num Reqs, Num Nums, Min Time/Req (ms), Mean Time/Req (ms), Median Time/Req (ms), Max Time/Req (ms), Min Requests/Sec, Mean Requests/Sec, Median Requests/Sec, Max Requests/Sec, Num Failed Nodes
 # actix-rust
 100,444,1.463,1.790,1.544,2.301,434.590,581.488,647.860 683.420,0
 100,2222,8.626,8.920,9.011,9.051,110.480,112.140,110.970 115.930,0
