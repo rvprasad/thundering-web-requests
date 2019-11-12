@@ -1,1 +1,1 @@
-./server
+crystal run --release server.cr
