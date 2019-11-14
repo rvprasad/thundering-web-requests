@@ -14,7 +14,7 @@ set output "data/ab-client-2MBps-median.png"
 set multiplot layout 2,1
 set key on top left horizontal
 unset xlabel
-set ylabel "Median requests per second observed clientside"
+set ylabel "Median requests per second as observed on client-side"
 plot "data/ab-client-perf.txt" index 0 every 3::0 using 1:9 title "actix-rust" with linespoints, \
     "data/ab-client-perf.txt" index 1 every 3::0 using 1:9 title "go" with linespoints
 set xlabel "Number of concurrent requests per client node"
@@ -37,7 +37,7 @@ set output "data/ab-client-10MBps-median.png"
 set multiplot layout 2,1
 unset xlabel
 set key on top left horizontal
-set ylabel "Median requests per second observed clientside"
+set ylabel "Median requests per second as observed on client-side"
 plot "data/ab-client-perf.txt" index 0 every 3::1 using 1:9 title "actix-rust" with linespoints, \
     "data/ab-client-perf.txt" index 1 every 3::1 using 1:9 title "go" with linespoints
 set xlabel "Number of concurrent requests per client node"
@@ -60,7 +60,7 @@ set output "data/ab-client-20MBps-median.png"
 set multiplot layout 2,1
 set key on top left horizontal
 unset xlabel
-set ylabel "Median requests per second observed clientside"
+set ylabel "Median requests per second as observed on client-side"
 plot "data/ab-client-perf.txt" index 0 every 3::2 using 1:9 title "actix-rust" with linespoints, \
     "data/ab-client-perf.txt" index 1 every 3::2 using 1:9 title "go" with linespoints
 set xlabel "Number of concurrent requests per client node"
