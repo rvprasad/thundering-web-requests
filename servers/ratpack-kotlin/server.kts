@@ -30,6 +30,7 @@ RatpackServer.start { serverSpec ->
           val ret = Gson().toJson(randoms)
           val duration = System.nanoTime() - start
           println("%5.3fms".format(duration / 1e6))
+          ret
         } .then { x -> ctx.render(x) }
       }
     }
