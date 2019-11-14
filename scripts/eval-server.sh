@@ -12,8 +12,8 @@ for c in `cat reqs-payload-config.txt` ; do
       'phoenix_elixir' 'trot_elixir' \
       'flask+uwsgi-python3' 'tornado-python3' \
       'yaws-erlang' 'cowboy-erlang' ; do
-    date
     for iter in `seq 1 5` ; do
+      date
       ansible-playbook -i hosts.yml eval-server.yml \
         -e "client=ab server=$server nums=$nums conc_req=$conc_req \
         iter=$iter node_timeout=$node_timeout"
