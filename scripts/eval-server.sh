@@ -10,14 +10,15 @@ for c in `cat reqs-payload-config.txt` ; do
       'nodejs-express-javascript' 'nodejs-javascript' \
       'ktor-kotlin' 'micronaut-kotlin' 'ratpack-kotlin'  'vertx-kotlin' \
       'phoenix_elixir' 'trot_elixir' \
-      'cyclone-python' 'flask+uwsgi-python3' 'tornado-python3' \
+      'flask+uwsgi-python3' 'tornado-python3' \
       'yaws-erlang' 'cowboy-erlang' ; do
     date
-    ansible-playbook -i hosts.yml eval-server.yml \
-      -e "client=ab server=$server nums=$nums conc_req=$conc_req iter=1 node_timeout=$node_timeout"
-    ansible-playbook -i hosts.yml eval-server.yml \
-      -e "client=ab server=$server nums=$nums conc_req=$conc_req iter=2 node_timeout=$node_timeout"
-    for iter in `seq 1 7` ; do
+    for iter in `seq 1 5` ; do
+      ansible-playbook -i hosts.yml eval-server.yml \
+        -e "client=ab server=$server nums=$nums conc_req=$conc_req \
+        iter=$iter node_timeout=$node_timeout"
+    done
+    for iter in `seq 1 5` ; do
       date
       ansible-playbook -i hosts.yml eval-server.yml \
         -e "client=wc server=$server nums=$nums conc_req=$conc_req \

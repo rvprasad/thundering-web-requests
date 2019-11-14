@@ -28,7 +28,6 @@ plot "data/ab-server-perf.txt" index 2 every 3::0 using 1:9 title "nodejs-expres
     "data/ab-server-perf.txt" index 7 every 3::0 using 1:9 title "vertx-kotlin" with linespoints, \
     "data/ab-server-perf.txt" index 8 every 3::0 using 1:9 title "phoenix-elixir" with linespoints, \
     "data/ab-server-perf.txt" index 9 every 3::0 using 1:9 title "trot-elixir" with linespoints, \
-    "data/ab-server-perf.txt" index 10 every 3::0 using 1:9 title "cyclone-python" with linespoints, \
     "data/ab-server-perf.txt" index 11 every 3::0 using 1:9 title "flask+uwsgi-python3" with linespoints, \
     "data/ab-server-perf.txt" index 12 every 3::0 using 1:9 title "tornado-python3" with linespoints, \
     "data/ab-server-perf.txt" index 13 every 3::0 using 1:9 title "yaws-erlang" with linespoints, \
@@ -51,7 +50,6 @@ plot "data/ab-server-perf.txt" index 2 every 3::1 using 1:9 title "nodejs-expres
     "data/ab-server-perf.txt" index 7 every 3::1 using 1:9 title "vertx-kotlin" with linespoints, \
     "data/ab-server-perf.txt" index 8 every 3::1 using 1:9 title "phoenix-elixir" with linespoints, \
     "data/ab-server-perf.txt" index 9 every 3::1 using 1:9 title "trot-elixir" with linespoints, \
-    "data/ab-server-perf.txt" index 10 every 3::1 using 1:9 title "cyclone-python" with linespoints, \
     "data/ab-server-perf.txt" index 11 every 3::1 using 1:9 title "flask+uwsgi-python3" with linespoints, \
     "data/ab-server-perf.txt" index 12 every 3::1 using 1:9 title "tornado-python3" with linespoints, \
     "data/ab-server-perf.txt" index 13 every 3::1 using 1:9 title "yaws-erlang" with linespoints, \
@@ -74,7 +72,6 @@ plot "data/ab-server-perf.txt" index 2 every 3::2 using 1:9 title "nodejs-expres
     "data/ab-server-perf.txt" index 7 every 3::2 using 1:9 title "vertx-kotlin" with linespoints, \
     "data/ab-server-perf.txt" index 8 every 3::2 using 1:9 title "phoenix-elixir" with linespoints, \
     "data/ab-server-perf.txt" index 9 every 3::2 using 1:9 title "trot-elixir" with linespoints, \
-    "data/ab-server-perf.txt" index 10 every 3::2 using 1:9 title "cyclone-python" with linespoints, \
     "data/ab-server-perf.txt" index 11 every 3::2 using 1:9 title "flask+uwsgi-python3" with linespoints, \
     "data/ab-server-perf.txt" index 12 every 3::2 using 1:9 title "tornado-python3" with linespoints, \
     "data/ab-server-perf.txt" index 13 every 3::2 using 1:9 title "yaws-erlang" with linespoints, \

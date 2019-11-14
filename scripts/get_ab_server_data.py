@@ -24,7 +24,6 @@ def get_data(impl, nums, reqs):
         'vertx-kotlin': r'^(\d+\.\d+)ms',
         'phoenix_elixir': r'^(\d+\.\d+)ms',
         'trot_elixir': r'^(\d+\.\d+)ms',
-        'cyclone-python': r' (\d+\.\d+)ms$',
         'flask+uwsgi-python3': r'^(\d+\.\d+)ms',
         'tornado-python3': r' (\d+\.\d+)ms',
         'yaws-erlang': r' (\d+\.\d+)ms',
@@ -64,8 +63,8 @@ with open(f'data/ab-server-perf.txt', 'wt') as f:
     for impl in ['actix-rust', 'go-server', 'nodejs-express-javascript',
                  'nodejs-javascript', 'ktor-kotlin', 'micronaut-kotlin',
                  'ratpack-kotlin', 'vertx-kotlin', 'phoenix_elixir',
-                 'trot_elixir', 'cyclone-python', 'flask+uwsgi-python3',
-                 'tornado-python3', 'yaws-erlang', 'cowboy-erlang']:
+                 'trot_elixir', 'flask+uwsgi-python3', 'tornado-python3',
+                 'yaws-erlang', 'cowboy-erlang']:
         print(f'# {impl}', file=f)
 
         failures = []

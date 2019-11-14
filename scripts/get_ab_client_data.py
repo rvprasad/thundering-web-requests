@@ -57,8 +57,8 @@ with open(f'data/ab-client-perf.txt', 'wt') as f:
     for impl in ['actix-rust', 'go-server', 'nodejs-express-javascript',
                  'nodejs-javascript', 'ktor-kotlin', 'micronaut-kotlin',
                  'ratpack-kotlin', 'vertx-kotlin', 'phoenix_elixir',
-                 'trot_elixir', 'cyclone-python', 'flask+uwsgi-python3',
-                 'tornado-python3', 'yaws-erlang', 'cowboy-erlang']:
+                 'trot_elixir', 'flask+uwsgi-python3', 'tornado-python3',
+                 'yaws-erlang', 'cowboy-erlang']:
         print(f'# {impl}', file=f)
 
         failed_nodes = []

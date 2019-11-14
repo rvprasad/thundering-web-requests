@@ -40,8 +40,7 @@
         ulimit -n $(( {{conc_req}} + 1024 ))
         mkdir -p thundering-web-requests/data/{{server}}
         cd thundering-web-requests
-        ab -n $(( {{conc_req}} * 5 )) -c {{conc_req}} \
-          -s $(( {{node_timeout}} - 60 )) \
+        ab -n {{conc_req}} -c {{conc_req}} -s $(( {{node_timeout}} - 60 )) \
           http://192.168.2.10:1234/random?num={{nums}} \
           &> data/{{server}}/{{client}}-{{nums}}-{{conc_req}}-{{iter}}.log
       when: client == 'ab' and '10' not in inventory_hostname
