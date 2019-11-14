@@ -15,7 +15,7 @@ Summary = namedtuple('Summary', ['min_time_per_req', 'mean_time_per_req',
 def get_data(impl, nums, reqs):
     impl_2_pattern = {
         'actix-rust': r'^(\d+\.\d+)ms',
-        'go-server': r'(?:1234)?(\d+\.\d+)ms',
+        'go-server': r'^(\d+\.\d+)ms',
         'nodejs-express-javascript': r'^\d+: (\d+\.\d+)ms',
         'nodejs-javascript': r'^\d+: (\d+\.\d+)ms',
         'ktor-kotlin': r'^(\d+\.\d+)ms',
