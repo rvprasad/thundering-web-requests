@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: subject_raspi
   gather_facts: false
   remote_user: life
   tasks:
