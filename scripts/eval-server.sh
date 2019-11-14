@@ -1,17 +1,17 @@
 #! /usr/bin/env bash
 
 node_timeout=600
-for c in `cat reqs-payload-config.txt` ; do
-  IFS="," read -a tmp1 <<< $c
-  conc_req=${tmp1[0]}
-  nums=${tmp1[1]}
-  for server in \
-      'actix-rust' 'go-server' \
-      'nodejs-express-javascript' 'nodejs-javascript' \
-      'ktor-kotlin' 'micronaut-kotlin' 'ratpack-kotlin'  'vertx-kotlin' \
-      'phoenix_elixir' 'trot_elixir' \
-      'flask+uwsgi-python3' 'tornado-python3' \
-      'yaws-erlang' 'cowboy-erlang' ; do
+for server in \
+    'actix-rust' 'go-server' \
+    'nodejs-express-javascript' 'nodejs-javascript' \
+    'ktor-kotlin' 'micronaut-kotlin' 'ratpack-kotlin'  'vertx-kotlin' \
+    'phoenix_elixir' 'trot_elixir' \
+    'flask+uwsgi-python3' 'tornado-python3' \
+    'yaws-erlang' 'cowboy-erlang' ; do
+  for c in `cat reqs-payload-config.txt` ; do
+    IFS="," read -a tmp1 <<< $c
+    conc_req=${tmp1[0]}
+    nums=${tmp1[1]}
     for iter in `seq 1 5` ; do
       date
       ansible-playbook -i hosts.yml eval-server.yml \
