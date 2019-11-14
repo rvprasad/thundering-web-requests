@@ -31,6 +31,6 @@ func randomHandler(writer http.ResponseWriter, req *http.Request) {
 
 func main() {
 	http.HandleFunc("/random", randomHandler)
-	fmt.Printf("Serving at 0.0.0.0:1234")
+	fmt.Printf("Serving at 0.0.0.0:1234\n")
 	log.Fatal(http.ListenAndServe("0.0.0.0:1234", nil))
 }
