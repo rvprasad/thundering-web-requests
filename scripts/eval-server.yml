@@ -76,6 +76,6 @@
       shell: cat /sys/class/thermal/thermal_zone0/temp
       register: result
       when: "'10' in inventory_hostname"
-      until: (result.stdout|int) < 62000
+      until: (result.stdout|int) < 60000
       retries: 100
       delay: 5
