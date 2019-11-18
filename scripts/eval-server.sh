@@ -7,7 +7,7 @@ for server in \
     'ktor-kotlin' 'micronaut-kotlin' 'ratpack-kotlin'  'vertx-kotlin' \
     'phoenix_elixir' 'trot_elixir' \
     'flask+uwsgi-python3' 'tornado-python3' \
-    'yaws-erlang' 'cowboy-erlang' ; do
+    'cowboy-erlang' ; do
   for c in `cat reqs-payload-config.txt` ; do
     IFS="," read -a tmp1 <<< $c
     conc_req=${tmp1[0]}
