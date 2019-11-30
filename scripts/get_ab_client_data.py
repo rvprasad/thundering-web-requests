@@ -26,19 +26,28 @@ def get_data(impl, nums, reqs):
                     mobj1 = re.match(r"Time per request:(.*)\[ms\].*concu.*", l)
                     if mobj1:
                         time_per_reqs = float(mobj1.group(1).strip())
+                        continue
+
                     mobj2 = re.match(r"Requests per second:(.*)\[#.*", l)
                     if mobj2:
                         reqs_per_sec = float(mobj2.group(1).strip())
+                        continue
+
                     mobj3 = re.match(r"Total of(.*)requests completed", l)
                     if mobj3:
                         completed_requests = int(mobj3.group(1).strip())
+                        continue
+
                     mobj4 = re.match(r"Complete requests:(.*)", l)
                     if mobj4:
                         completed_requests = int(mobj4.group(1).strip())
+                        continue
+
                     mobj5 = re.match(r"Failed requests:(.*)", l)
                     if mobj5:
                         successful_requests = (completed_requests -
                                                int(mobj5.group(1).strip()))
+
             acc2.append(Summary(time_per_reqs, reqs_per_sec, completed_requests,
                                 successful_requests))
         acc1.append(acc2)
@@ -53,6 +62,10 @@ def key_helper(acc):
     tmp1 = [x for x in acc if x.time_per_reqs]
     key4 = -statistics.median(x.reqs_per_sec for x in tmp1) if tmp1 else 0
     return key1, key2, key3, key4
+
+
+def get_stats(items):
+    return min(items), statistics.mean(items), statistics.median(items), max(items)
 
 
 with open('scripts/reqs-payload-config.txt', 'r') as f:
@@ -108,19 +121,13 @@ with open(f'data/ab-client-perf.txt', 'wt') as f:
                 only_succ_clients = filter(lambda x: x.time_per_reqs,
                                            run_to_consider)
                 time_per_reqs, reqs_per_sec, _, _ = zip(*only_succ_clients)
-                min_time_per_req = min(time_per_reqs)
-                mean_time_per_req = statistics.mean(time_per_reqs)
-                median_time_per_req = statistics.median(time_per_reqs)
-                max_time_per_req = max(time_per_reqs)
-                min_reqs_per_sec = min(reqs_per_sec)
-                mean_reqs_per_sec = statistics.mean(reqs_per_sec)
-                median_reqs_per_sec = statistics.median(reqs_per_sec)
-                max_reqs_per_sec = max(reqs_per_sec)
-                print(f'{reqs},{nums},{min_time_per_req:.3f},'
-                      f'{mean_time_per_req:.3f},{median_time_per_req:.3f},'
-                      f'{max_time_per_req:.3f},{min_reqs_per_sec:.3f},'
-                      f'{mean_reqs_per_sec:.3f},{median_reqs_per_sec:.3f},'
-                      f'{max_reqs_per_sec:.3f},'
+                tpr_stats = get_stats(time_per_reqs)
+                rps_stats = get_stats(reqs_per_sec)
+                print(f'{reqs},{nums},{tpr_stats[0]:.3f},'
+                      f'{tpr_stats[1]:.3f},{tpr_stats[2]:.3f},'
+                      f'{tpr_stats[3]:.3f},{rps_stats[0]:.3f},'
+                      f'{rps_stats[1]:.3f},{rps_stats[2]:.3f},'
+                      f'{rps_stats[3]:.3f},'
                       f'{least_num_failed_nodes}/{most_num_failed_nodes}{suffix}',
                       file=f)
 
