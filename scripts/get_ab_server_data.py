@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 from collections import namedtuple
-import glob
+import itertools
 import re
 import statistics
 
@@ -26,35 +26,33 @@ def get_data(impl, nums, reqs):
         'trot_elixir': r'^(\d+\.\d+)ms',
         'flask+uwsgi-python3': r'^(\d+\.\d+)ms',
         'tornado-python3': r' (\d+\.\d+)ms',
-        'yaws-erlang': r' (\d+\.\d+)ms',
         'cowboy-erlang': r'^(\d+\.\d+)ms'
     }
     result = []
-    for i in range(1, 3):
+    for i in range(1, 6):
         pattern = impl_2_pattern[impl]
         acc = []
         file_name = f'data/master10/{impl}/ab-{nums}-{reqs}-{i}-server.log'
-        num_processed_reqs = 0
-        with open(file_name, 'rt') as f:
-            for l in f.readlines():
-                mobj = re.search(pattern, l)
-                if mobj:
-                    num_processed_reqs += 1
-                    if num_processed_reqs > 200:  # disregard warm-up requests
-                        acc.append(float(mobj.group(1).strip()))
+        try:
+            with open(file_name, 'rt') as f:
+                tmp1 = (re.search(pattern, l) for l in f)
+                tmp2 = (float(mobj.group(1).strip()) for mobj in tmp1 if mobj)
+                acc.extend(itertools.islice(tmp2, 200, None))
 
-        result.append(Summary(min(acc), statistics.mean(acc),
-                              statistics.median(acc), max(acc), len(acc)))
+            result.append(Summary(min(acc), statistics.mean(acc),
+                                  statistics.median(acc), max(acc), len(acc)))
+        except UnicodeDecodeError as e:
+            print(f"Skipping {file_name} due to error {e}")
 
-    result.sort(key=lambda x: -x.num_serviced_reqs)
-    return result[0] if result else None
+    return result
 
 
 with open('scripts/reqs-payload-config.txt', 'r') as f:
     reqs_nums = sorted(tuple(map(int, x.strip().split(',')))
                        for x in f.readlines())
 
-impl_2_failures = {}
+impl_2_min_serviced_reqs = {}
+impl_2_max_serviced_reqs = {}
 with open(f'data/ab-server-perf.txt', 'wt') as f:
     print("# Num Reqs, Num Nums, Min Time/Req (ms), Mean Time/Req (ms), "
           "Median Time/Req (ms), Max Time/Req (ms), Min Requests/Sec, "
@@ -64,39 +62,55 @@ with open(f'data/ab-server-perf.txt', 'wt') as f:
                  'nodejs-javascript', 'ktor-kotlin', 'micronaut-kotlin',
                  'ratpack-kotlin', 'vertx-kotlin', 'phoenix_elixir',
                  'trot_elixir', 'flask+uwsgi-python3', 'tornado-python3',
-                 'yaws-erlang', 'cowboy-erlang']:
+                 'cowboy-erlang']:
         print(f'# {impl}', file=f)
 
-        failures = []
-        impl_2_failures[impl] = failures
+        max_serviced_reqs = []
+        impl_2_max_serviced_reqs[impl] = max_serviced_reqs
+        min_serviced_reqs = []
+        impl_2_min_serviced_reqs[impl] = min_serviced_reqs
         for reqs, nums in reqs_nums:
             tmp1 = get_data(impl, nums, reqs)
+            tmp1.sort(key=lambda x: -x.num_serviced_reqs)
             if tmp1:
+                best_run = tmp1[0]
                 print(f'{reqs},{nums},'
-                      f'{tmp1.min_time_per_req:.3f},'
-                      f'{tmp1.mean_time_per_req:.3f},'
-                      f'{tmp1.median_time_per_req:.3f},'
-                      f'{tmp1.max_time_per_req:.3f},'
-                      f'{(1000/tmp1.max_time_per_req):.3f},'
-                      f'{(1000/tmp1.mean_time_per_req):.3f},'
-                      f'{(1000/tmp1.median_time_per_req):.3f},'
-                      f'{(1000/tmp1.min_time_per_req):.3f},'
-                      f'{tmp1.num_serviced_reqs}',
+                      f'{best_run.min_time_per_req:.3f},'
+                      f'{best_run.mean_time_per_req:.3f},'
+                      f'{best_run.median_time_per_req:.3f},'
+                      f'{best_run.max_time_per_req:.3f},'
+                      f'{(1000/best_run.max_time_per_req):.3f},'
+                      f'{(1000/best_run.mean_time_per_req):.3f},'
+                      f'{(1000/best_run.median_time_per_req):.3f},'
+                      f'{(1000/best_run.min_time_per_req):.3f},'
+                      f'{best_run.num_serviced_reqs}',
                       file=f)
-                failures.append(reqs * 5 * 5 - tmp1.num_serviced_reqs)
+                max_serviced_reqs.append(best_run.num_serviced_reqs)
+                min_serviced_reqs.append(tmp1[-1].num_serviced_reqs)
             else:
                 print(f'{reqs},{nums},NA,NA,NA,NA,NA,NA,NA,NA,NA,NA', file=f)
-                failures.append(reqs*5)
+                max_serviced_reqs.append(0)
+                min_serviced_reqs.append(0)
 
         print("", file=f)
         print("", file=f)
 
-with open('data/ab-server-data-failures.csv', 'wt') as f:
+with open('data/ab-server-max-serviced-reqs.csv', 'wt') as f:
     print("# X@Y should be interpreted as X requests in Y MBps "
           "configuration", file=f)
-    print("Impl,100@2,500@2,1000@2,1500@2,3000@2,100@10,500@10,1000@10,"
-          "1500@10,3000@10,100@20,500@20,1000@20,1500@20,3000@20", file=f)
+    print("Impl,100@2,500@2,1000@2,1500@2,2500@2,100@6,500@6,1000@6,"
+          "1500@6,2500@6,100@10,500@10,1000@10,1500@10,2500@10", file=f)
 
-    for k, v in impl_2_failures.items():
+    for k, v in impl_2_max_serviced_reqs.items():
+        print("{0},{1},{4},{7},{10},{13},{2},{5},{8},{11},{14}"
+              ",{3},{6},{9},{12},{15}".format(k, *v), file=f)
+
+with open('data/ab-server-min-serviced-reqs.csv', 'wt') as f:
+    print("# X@Y should be interpreted as X requests in Y MBps "
+          "configuration", file=f)
+    print("Impl,100@2,500@2,1000@2,1500@2,2500@2,100@6,500@6,1000@6,"
+          "1500@6,2500@6,100@10,500@10,1000@10,1500@10,2500@10", file=f)
+
+    for k, v in impl_2_min_serviced_reqs.items():
         print("{0},{1},{4},{7},{10},{13},{2},{5},{8},{11},{14}"
               ",{3},{6},{9},{12},{15}".format(k, *v), file=f)
