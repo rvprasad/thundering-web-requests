@@ -2,4 +2,4 @@
 *.beam
 private*
 temp*
-data*
+data-*
