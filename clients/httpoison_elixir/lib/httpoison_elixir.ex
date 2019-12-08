@@ -4,8 +4,7 @@ defmodule Client do
   def dispatch_request(url, parent) do
     start = :erlang.monotonic_time(:microsecond)
     result = HTTPoison.get(url)
-    elapsed_time =
-      (:erlang.monotonic_time(:microsecond) - start) / 1000
+    elapsed_time = (:erlang.monotonic_time(:microsecond) - start) / 1000
 
     case result do
       {:ok, %HTTPoison.Response{status_code: 200}} ->
