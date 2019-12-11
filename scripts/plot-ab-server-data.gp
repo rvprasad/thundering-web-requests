@@ -8,7 +8,7 @@ do for [i=1:15] {
     set style line i linewidth 2
 }
 
-set terminal png size 960, 960 fontscale 1.2
+set terminal png size 960, 800 fontscale 1.2
 
 set logscale y
 
