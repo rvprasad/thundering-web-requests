@@ -3,3 +3,5 @@
 private*
 temp*
 data-*
+data/master*
+data/worker*
